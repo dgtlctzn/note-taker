@@ -79,11 +79,11 @@ module.exports = function (app) {
       const noteData = JSON.parse(data);
       const afterDelete = [];
       let newId = 0;
-      for (let i = 0; i < noteData.length; i++) {
-        if (id !== noteData[i].id) {
+      for (note of noteData) {
+        if (id !== note.id) {
           newId++;
-          noteData[i].id = newId;
-          afterDelete.push(noteData[i]);
+          note.id = newId;
+          afterDelete.push(note);
         }
       }
       fs.writeFile(
