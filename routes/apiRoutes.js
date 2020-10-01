@@ -36,10 +36,17 @@ module.exports = function (app) {
           });
         }
         const updateData = JSON.parse(jsonData);
+
+        if (updateData.length > 0) {
+            req.body.id = updateData[updateData.length - 1].id + 1;
+        } else {
+            req.body.id = 1
+        }
+
         updateData.push(req.body);
         fs.writeFile(
           path.join(__dirname, "../db/db.json"),
-          JSON.stringify(updateData),
+          JSON.stringify(updateData, null, 2),
           (err) => {
             if (err) {
               return res.status(400).json({
