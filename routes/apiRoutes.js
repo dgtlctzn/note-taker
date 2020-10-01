@@ -66,7 +66,7 @@ module.exports = function (app) {
     );
   });
 
-  app.get("/api/notes/:id", (req, res) => {
+  app.delete("/api/notes/:id", (req, res) => {
     fs.readFile(path.join(__dirname, "../db/db.json"), "utf-8", (err, data) => {
       if (err) {
         return res.status(500).json({
@@ -77,16 +77,33 @@ module.exports = function (app) {
       }
       let id = parseInt(req.params.id);
       const noteData = JSON.parse(data);
-      for (const note of noteData) {
-        if (id === note.id) {
-          return res.json({
+      const afterDelete = [];
+      let newId = 0;
+      for (let i = 0; i < noteData.length; i++) {
+        if (id !== noteData[i].id) {
+          newId++;
+          noteData[i].id = newId;
+          afterDelete.push(noteData[i]);
+        }
+      }
+      fs.writeFile(
+        path.join(__dirname, "../db/db.json"),
+        JSON.stringify(afterDelete, null, 2),
+        (err) => {
+          if (err) {
+            return res.status(400).json({
+              error: true,
+              data: null,
+              message: "unable to write to file",
+            });
+          }
+          res.json({
             error: false,
-            data: note,
+            data: afterDelete,
             message: "information returned",
           });
         }
-      }
-      return res.json({ error: true, data: null, message: "invalid id" });
+      );
     });
   });
 };

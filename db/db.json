@@ -1,17 +1,12 @@
 [
   {
     "title": "camping",
-    "text": "bring water filter",
+    "text": "pack backpack",
     "id": 1
   },
   {
     "title": "camping",
-    "text": "pack stove",
+    "text": "bring sleeping bag",
     "id": 2
-  },
-  {
-    "title": "camping",
-    "text": "bring water",
-    "id": 3
   }
 ]
