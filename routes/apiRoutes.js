@@ -2,6 +2,7 @@ const path = require("path");
 const fs = require("fs");
 
 module.exports = function (app) {
+  // retrieves data from json file
   app.get("/api/notes", (req, res) => {
     fs.readFile(
       path.join(__dirname, "../db/db.json"),
@@ -23,6 +24,7 @@ module.exports = function (app) {
     );
   });
 
+  // posts new data to json
   app.post("/api/notes", (req, res) => {
     fs.readFile(
       path.join(__dirname, "../db/db.json"),
@@ -37,6 +39,7 @@ module.exports = function (app) {
         }
         const updateData = JSON.parse(jsonData);
 
+        // adds incremental id to request object
         if (updateData.length > 0) {
           req.body.id = updateData[updateData.length - 1].id + 1;
         } else {
@@ -66,6 +69,7 @@ module.exports = function (app) {
     );
   });
 
+  // deletes item of specific id
   app.delete("/api/notes/:id", (req, res) => {
     fs.readFile(path.join(__dirname, "../db/db.json"), "utf-8", (err, data) => {
       if (err) {
@@ -75,6 +79,7 @@ module.exports = function (app) {
           message: "unable to retrieve notes.",
         });
       }
+      // removes selected if from db and reorders index
       let id = parseInt(req.params.id);
       const noteData = JSON.parse(data);
       const afterDelete = [];
