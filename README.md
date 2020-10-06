@@ -14,7 +14,7 @@
 
   ## Description
   The note taker site is an application that allows a user to input and save notes. I was primarily responsible for building out the server side of the application. There are two main html pages that are routed to via Express. In addition to rendering html the server also builds an api created with user input. The main api retrieval methods at work are GET, POST, and DELETE, which correspond with displaying notes, adding new notes, and removing notes respectively. The database used to store information is a basic json file that is read and written to. To access the server side api "/api/notes" can be added to the basic url. The format of the stored json is as follows:  
-  ```
+  ``` javascript
 {
     "error": false,
     "data": [
